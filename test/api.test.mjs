@@ -111,3 +111,11 @@ test("GET /api/quotes/q1 returns the seeded auto quote", async () => {
   const quote = await res.json();
   assert.equal(quote.type, "auto");
 });
+test("POST /api/quote rejects a missing coverageAmount with a 400", async () => {
+  const res = await fetch(`${base}/api/quote`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ type: "home", age: 40 }),
+  });
+  assert.equal(res.status, 400);
+});
